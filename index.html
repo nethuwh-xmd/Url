@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NETHUWH-URL-GENARATED-SITE 🦾</title>
+  <style>
+    body { font-family: Arial; padding: 40px; text-align: center; }
+    input, button { margin: 10px; font-size: 16px; }
+    #link { margin-top: 20px; word-break: break-word; color: green; }
+  </style>
+</head>
+<body>
+  <h2>🦾 NETHUWH-URL-GENARATED-SITE 🦾</h2>
+  <p>📤 Upload your photo & get a sharable URL instantly!</p>
+  <input type="file" id="fileInput" accept="image/*" />
+  <br>
+  <button onclick="uploadFile()">Upload</button>
+  <div id="link"></div>
+
+  <script>
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      if (!file) return alert("Please select a photo!");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("https://file.io/?expires=1w", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        document.getElementById("link").innerHTML =
+          `✅ Uploaded! URL: <br><a href="${result.link}" target="_blank">${result.link}</a>`;
+      } else {
+        document.getElementById("link").innerText = "❌ Upload failed!";
+      }
+    }
+  </script>
+</body>
+</html>
